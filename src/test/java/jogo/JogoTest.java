@@ -56,4 +56,20 @@ class JogoTest {
         verify(jogador, times(1)).lancar(dado1, dado2);
     }
 
+     @Test
+    void ganhaRepetindoPontoNoSegundoTurno() {
+        when(jogador.lancar((Dado.class), (Dado.class)))
+            .thenReturn(5, 4, 6, 5);
+        assertTrue(jogo.jogo());
+        verify(jogador, times(4)).lancar(dado1, dado2);
+        verify(jogador, atLeast(1)).lancar(dado1, dado2);
+    }
+
+    @Test
+    void perdeTirando7NoSegundoTurno() {
+        when(jogador.lancar((Dado.class), (Dado.class)))
+            .thenReturn(6, 8, 7);
+        assertFalse(jogo.jogo());
+        verify(jogador, times(3)).lancar(dado1, dado2);
+    }
 }
