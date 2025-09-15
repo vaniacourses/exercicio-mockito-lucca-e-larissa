@@ -21,4 +21,39 @@ class JogoTest {
         Jogo jogo = new Jogo(jogador, dado1, dado2);
     }
 
+    @Test
+    void ganhaNoPrimeiroTurnoCom7() {
+        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(7);
+        assertTrue(jogo.jogo());
+        verify(jogador, times(1)).lancar(dado1, dado2);
+    }
+
+    @Test
+    void ganhaNoPrimeiroTurnoCom11() {
+        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(11);
+        assertTrue(jogo.jogo());
+        verify(jogador, times(1)).lancar(dado1, dado2);
+    }
+
+    @Test
+    void perdeNoPrimeiroTurnoCom2() {
+        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(2);
+        assertFalse(jogo.jogo());
+        verify(jogador, times(1)).lancar(dado1, dado2);
+    }
+
+    @Test
+    void perdeNoPrimeiroTurnoCom3() {
+        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(3);
+        assertFalse(jogo.jogo());
+        verify(jogador, times(1)).lancar(dado1, dado2);
+    }
+
+    @Test
+    void perdeNoPrimeiroTurnoCom12() {
+        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(12);
+        assertFalse(jogo.jogo());
+        verify(jogador, times(1)).lancar(dado1, dado2);
+    }
+
 }
