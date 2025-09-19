@@ -2,13 +2,23 @@ package jogo;
 
 public class Jogo {
 
+	    private final Jogador jogador;
+    private final Dado dado1;
+    private final Dado dado2;
+
+    // Construtor recebe as dependÃªncias (injeÃ§Ã£o de dependÃªncia)
+    public Jogo(Jogador jogador, Dado dado1, Dado dado2) {
+        this.jogador = jogador;
+        this.dado1 = dado1;
+        this.dado2 = dado2;
+    }
 	
 	/*
-	 * Se for o primeiro turno e a soma das faces dos dados cair 7 ou 11 você ganha o jogo;
-	 * Se for o primeiro turno e a soma das faces dos dados cair 2, 3 e 12 você perde o jogo; 
-	 * Se não cair nenhum desses valores, o valor é armazenado e passa para o segundo turno;
-	 * Se for o segundo turno e a soma das faces dos dados cair 7 novamente, você perde o jogo;
-	 * Se for o segundo turno, você continuando jogando os dados e só ganha se cair um numero igual ao anterior do primeiro turno;
+	 * Se for o primeiro turno e a soma das faces dos dados cair 7 ou 11 vocï¿½ ganha o jogo;
+	 * Se for o primeiro turno e a soma das faces dos dados cair 2, 3 e 12 vocï¿½ perde o jogo; 
+	 * Se nï¿½o cair nenhum desses valores, o valor ï¿½ armazenado e passa para o segundo turno;
+	 * Se for o segundo turno e a soma das faces dos dados cair 7 novamente, vocï¿½ perde o jogo;
+	 * Se for o segundo turno, vocï¿½ continuando jogando os dados e sï¿½ ganha se cair um numero igual ao anterior do primeiro turno;
 	 */
 	public boolean jogo(){
 		
@@ -35,4 +45,41 @@ public class Jogo {
 		return resultado == ponto;
 		
 	}
+}
+
+
+package jogo;
+
+public class Jogo {
+
+    private final Jogador jogador;
+    private final Dado dado1;
+    private final Dado dado2;
+
+    // Construtor recebe as dependÃªncias (injeÃ§Ã£o de dependÃªncia)
+    public Jogo(Jogador jogador, Dado dado1, Dado dado2) {
+        this.jogador = jogador;
+        this.dado1 = dado1;
+        this.dado2 = dado2;
+    }
+
+    public boolean jogo() {
+        int resultado = jogador.lancar(dado1, dado2);
+
+        if (resultado == 7 || resultado == 11) {
+            return true; // vitÃ³ria no primeiro turno
+        } else if (resultado == 2 || resultado == 3 || resultado == 12) {
+            return false; // derrota no primeiro turno
+        }
+
+        int ponto = resultado;
+
+        resultado = jogador.lancar(dado1, dado2);
+
+        while (resultado != ponto && resultado != 7) {
+            resultado = jogador.lancar(dado1, dado2);
+        }
+
+        return resultado == ponto; // ganha se repetir o ponto, perde se sair 7
+    }
 }

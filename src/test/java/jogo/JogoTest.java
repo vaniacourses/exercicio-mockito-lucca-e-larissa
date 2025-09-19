@@ -15,60 +15,59 @@ class JogoTest {
 
     @BeforeEach
     void inicializa() {
-        Jogador jogador = mock(Jogador.class);
-        Dado dado1   = mock(Dado.class);
-        Dado dado2   = mock(Dado.class);
-        Jogo jogo = new Jogo(jogador, dado1, dado2);
+        jogador = mock(Jogador.class);
+        dado1   = mock(Dado.class);
+        dado2   = mock(Dado.class);
+        jogo    = new Jogo(jogador, dado1, dado2);
     }
 
     @Test
     void ganhaNoPrimeiroTurnoCom7() {
-        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(7);
+        when(jogador.lancar(dado1, dado2)).thenReturn(7);
         assertTrue(jogo.jogo());
         verify(jogador, times(1)).lancar(dado1, dado2);
     }
 
     @Test
     void ganhaNoPrimeiroTurnoCom11() {
-        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(11);
+        when(jogador.lancar(dado1, dado2)).thenReturn(11);
         assertTrue(jogo.jogo());
         verify(jogador, times(1)).lancar(dado1, dado2);
     }
 
     @Test
     void perdeNoPrimeiroTurnoCom2() {
-        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(2);
+        when(jogador.lancar(dado1, dado2)).thenReturn(2);
         assertFalse(jogo.jogo());
         verify(jogador, times(1)).lancar(dado1, dado2);
     }
 
     @Test
     void perdeNoPrimeiroTurnoCom3() {
-        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(3);
+        when(jogador.lancar(dado1, dado2)).thenReturn(3);
         assertFalse(jogo.jogo());
         verify(jogador, times(1)).lancar(dado1, dado2);
     }
 
     @Test
     void perdeNoPrimeiroTurnoCom12() {
-        when(jogador.lancar((Dado.class), (Dado.class))).thenReturn(12);
+        when(jogador.lancar(dado1, dado2)).thenReturn(12);
         assertFalse(jogo.jogo());
         verify(jogador, times(1)).lancar(dado1, dado2);
     }
 
-     @Test
+    @Test
     void ganhaRepetindoPontoNoSegundoTurno() {
-        when(jogador.lancar((Dado.class), (Dado.class)))
-            .thenReturn(5, 4, 6, 5);
+        when(jogador.lancar(dado1, dado2))
+            .thenReturn(5, 4, 6, 5); // ponto=5, depois repete
         assertTrue(jogo.jogo());
         verify(jogador, times(4)).lancar(dado1, dado2);
-        verify(jogador, atLeast(1)).lancar(dado1, dado2);
     }
 
     @Test
     void perdeTirando7NoSegundoTurno() {
-        when(jogador.lancar((Dado.class), (Dado.class)))
-            .thenReturn(6, 8, 7);
+        when(jogador.lancar(dado1, dado2))
+            .thenReturn(6, 8, 7); // ponto=6, depois sai 7
         assertFalse(jogo.jogo());
         verify(jogador, times(3)).lancar(dado1, dado2);
     }
